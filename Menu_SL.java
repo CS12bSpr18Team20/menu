@@ -42,6 +42,11 @@ public class Menu_SL{
 		JButton food10 = new JButton("food10 $10");
 		JButton food11 = new JButton("food11 $11");
 		JButton food12 = new JButton("food12 $12");
+		JCheckBox checkbox1 = new JCheckBox("Extra Bread", false);
+		JCheckBox checkbox2 = new JCheckBox("Extra Sauce", false);
+		JCheckBox checkbox3 = new JCheckBox("Extra Garnish", false);
+		JCheckBox checkbox4 = new JCheckBox("Extra Cheese", false);
+		JCheckBox checkbox5 = new JCheckBox("Extra Toppings", false);
 		JButton calculate = new JButton("Calculate & Print");
 		JButton clear = new JButton("Clear");
 		JLabel answer = new JLabel("<html><h1>Total Amount Due: $0.00</h1></html>");
@@ -52,20 +57,36 @@ public class Menu_SL{
 		label1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		content.add(label1,BorderLayout.PAGE_START);
 
+
 		JComboBox cb = new JComboBox();
 				cb.setEditable(false);
 				cb.addItem("Dine-In");
-				cb.addItem("Take-Out");
+				//ordering take-out will add additional $3
+				cb.addItem("Take-Out (Extra $3)");
+		cb.addActionListener(new ActionListener() {
+
+		    @Override
+		    public void actionPerformed(ActionEvent event) {
+		        JComboBox<String> cb = (JComboBox<String>) event.getSource();
+		        String selectedBook = (String) cb.getSelectedItem();
+
+		        if (selectedBook.equals("Dine-In")) {
+								content.setBackground(Color.GREEN);
+		        } else if (selectedBook.equals("Take-Out (Extra $3)")) {
+		            content.setBackground(Color.RED);
+		        }
+		    }
+		});
 
 
 		JPanel input = new JPanel();
-		input.setLayout(new GridLayout(0,3));
-		input.add(new JLabel(""));input.add(cb);input.add(new JLabel(""));
-		input.add(food1);input.add(food2);input.add(food3);
-		input.add(food4);input.add(food5);input.add(food6);
-		input.add(food7);input.add(food8);input.add(food9);
-		input.add(food10);input.add(food11);input.add(food12);
-		input.add(calculate);input.add(answer);input.add(clear);
+		input.setLayout(new GridLayout(0,4));
+		input.add(new JLabel(""));input.add(cb);input.add(new JLabel("")); input.add(new JLabel("Add-Ons (Extra $3)"));
+		input.add(food1);input.add(food2);input.add(food3); input.add(checkbox1);
+		input.add(food4);input.add(food5);input.add(food6); input.add(checkbox2);
+		input.add(food7);input.add(food8);input.add(food9); input.add(checkbox3);
+		input.add(food10);input.add(food11);input.add(food12); input.add(checkbox4);
+		input.add(calculate);input.add(answer);input.add(clear); input.add(checkbox5);
 		input.add(new JLabel("Signature:"));
 		content.add(input,BorderLayout.CENTER);
 
@@ -348,6 +369,30 @@ public class Menu_SL{
 								for(String foodName: orderKeys){
 									total += menu.get(foodName)*order.get(foodName);
 								}
+								//JComboBox<String> cb = (JComboBox<String>) event.getSource();
+				        String selectedBook = (String) cb.getSelectedItem();
+								if (selectedBook.equals("Dine-In")) {
+									 content.setBackground(Color.GREEN);
+							 } else if (selectedBook.equals("Take-Out (Extra $3)")) {
+									 content.setBackground(Color.RED);
+									 total+=3;
+							 }
+							 if (checkbox1.isSelected()) {
+            			total +=3;
+        			}
+							if (checkbox2.isSelected()){
+            			total +=3;
+        			}
+							if (checkbox3.isSelected()) {
+								 total +=3;
+						 }
+						 if (checkbox4.isSelected()){
+								 total +=3;
+						 }
+						 if (checkbox5.isSelected()) {
+								total +=3;
+						}
+
 								answer.setText("<html><h1>Total Amount Due: $"+total+"</h1></html>");
 								writeMapToFile(order,"order.txt");
 							}
