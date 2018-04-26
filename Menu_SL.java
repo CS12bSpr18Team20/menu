@@ -100,6 +100,7 @@ public class Menu_SL{
 		buttonPane.add(new JLabel("Add-Ons (Extra $3)"));
 		buttonPane.add(checkbox1);
 		buttonPane.add(checkbox2);
+		buttonPane.add(checkbox3);
 		buttonPane.add(checkbox4);
 		buttonPane.add(checkbox5);
 		content.add(buttonPane, BorderLayout.LINE_START);
