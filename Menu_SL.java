@@ -50,6 +50,10 @@ public class Menu_SL{
 		JButton calculate = new JButton("Calculate & Print");
 		JButton clear = new JButton("Clear");
 		JLabel answer = new JLabel("<html><h1>Total Amount Due: $0.00</h1></html>");
+		JLabel note = new JLabel("Note");
+		JTextField addNote = new JTextField("Add a note...");
+		JButton add = new JButton("Add");
+		JButton delete = new JButton("Delete");
 
 		content.setLayout(new BorderLayout());
 
@@ -81,14 +85,25 @@ public class Menu_SL{
 
 		JPanel input = new JPanel();
 		input.setLayout(new GridLayout(0,4));
-		input.add(new JLabel(""));input.add(cb);input.add(new JLabel("")); input.add(new JLabel("Add-Ons (Extra $3)"));
-		input.add(food1);input.add(food2);input.add(food3); input.add(checkbox1);
-		input.add(food4);input.add(food5);input.add(food6); input.add(checkbox2);
-		input.add(food7);input.add(food8);input.add(food9); input.add(checkbox3);
-		input.add(food10);input.add(food11);input.add(food12); input.add(checkbox4);
-		input.add(calculate);input.add(answer);input.add(clear); input.add(checkbox5);
+		input.add(new JLabel(""));input.add(cb);input.add(new JLabel("")); input.add(note);
+		input.add(food1);input.add(food2);input.add(food3); input.add(addNote);
+		input.add(food4);input.add(food5);input.add(food6); input.add(add);
+		input.add(food7);input.add(food8);input.add(food9); input.add(delete);
+		input.add(food10);input.add(food11);input.add(food12); input.add(new JLabel("Manager : Kyle"));
+		input.add(calculate);input.add(answer);input.add(clear); input.add(new JLabel("Helper : Mick"));
 		input.add(new JLabel("Signature:"));
 		content.add(input,BorderLayout.CENTER);
+		note.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new GridLayout(7,1));
+		buttonPane.add(new JLabel("Add-Ons (Extra $3)"));
+		buttonPane.add(checkbox1);
+		buttonPane.add(checkbox2);
+		buttonPane.add(checkbox4);
+		buttonPane.add(checkbox5);
+		content.add(buttonPane, BorderLayout.LINE_START);
+
 
 		//Add signature area
 		MouseDrawDemo drawWidget1 = new MouseDrawDemo();
@@ -395,6 +410,21 @@ public class Menu_SL{
 
 								answer.setText("<html><h1>Total Amount Due: $"+total+"</h1></html>");
 								writeMapToFile(order,"order.txt");
+							}
+						});
+
+						add.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e){
+									String nameText = addNote.getText();
+									order.put(nameText, 1);
+								writeMapToFile(order,"order.txt");
+							}
+						});
+
+
+						delete.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e){
+								addNote.setText("");
 							}
 						});
 
